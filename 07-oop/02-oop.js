@@ -249,3 +249,167 @@ config.browser = "firefox";
 console.log(config.browser);
 
 console.log(config.getTimeOut());
+
+const mangGoc = [3, 4, 5];
+
+const mangSaoChep = [...mangGoc];
+
+const configMacDinh = {
+  baseUrl: "abc",
+  timeOut: 30000,
+};
+
+const configProd = {
+  ...configMacDinh,
+  baseUrl: "prod.com",
+};
+
+//khi sử dụng dấu 3 chấm trong tham số hàm
+//Rest operator: Thu gom nhiều thứ -> 1 mảng
+function hienThiDanhSachGia(...danhSachGia) {
+  console.log(danhSachGia);
+}
+
+const gia = [100, 200, 300];
+
+//giống hệt Spread operator -> chúng ta rải 1 mảng -> thành nhiều phần tử
+hienThiDanhSachGia(...gia);
+
+//REST = GOM VÀO
+
+// 100 200 300 -> ...danhSachGia -> [100, 200,300]
+
+// SPREAD = bung ra
+// [100, 200, 300] => ...gia => 100 200 300
+
+//rESST ở trong array
+// [10, 20, 30, 40] -> 10, [20, 30, 40]
+
+const [dauTien, ...conLai] = [10, 20, 30, 40];
+
+console.log(dauTien);
+
+console.log(conLai);
+
+const user = {
+  id: 1,
+  name: "neko",
+  role: "admin",
+};
+
+const { id, ...thongTinConLai } = user;
+
+console.log(id);
+
+console.log(thongTinConLai);
+// class BaseSuite {
+//   tenSuite;
+//   constructor(tenSuite) {
+//     this.tenSuite = tenSuite;
+//   }
+//   inTieuDe() {
+//     console.log(`=== ${this.tenSuite} ===`);
+//   }
+//   inKetQua(danhSachCase) {
+//     for (const { ten, trangThai, thoiGian } of danhSachCase) {
+//       console.log(`TC: ${ten} | Status: ${trangThai} | Time: ${thoiGian}ms`);
+//     }
+//   }
+// }
+// class LoginSuite extends BaseSuite {
+//   trangKiemThu = "/login";
+
+//   //   constructor(ten) {
+//   //     super(ten);
+//   //   }
+//   inTieuDe() {
+//     super.inTieuDe();
+//     console.log(`Trang kiểm thử ${this.trangKiemThu}`);
+//   }
+// }
+// let loginCases = [
+//   { ten: "Đăng nhập đúng tài khoản", trangThai: "passed", thoiGian: 12000 },
+//   { ten: "Sai mật khẩu", trangThai: "failed", thoiGian: 5000 },
+//   { ten: "Email rỗng", trangThai: "passed", thoiGian: 8000 },
+// ];
+// const loginSuite = new LoginSuite("/loginTest");
+// loginSuite.inTieuDe();
+
+// Luồng như này
+// tự đồng ngầm tạo 1 cái constructor có format là
+
+// constructor(...args){
+//     super(...args)
+// }
+// ->   //   constructor(ten) {
+//     super(ten);
+//   }
+
+// class BasePage {
+//   constructor() {
+//     console.log("Trong Constructor Cha");
+//   }
+// }
+
+// class BasePageCon extends BasePage {
+//   btnLogin = "#btnLogin";
+
+//   constructor() {
+//     super();
+//     console.log("BasePage con chay rieng", this.btnLogin);
+//   }
+// }
+
+// const basePageCon = new BasePageCon();
+// basePageCon.btnLogin;
+
+class BasePage {
+  cuonTrang() {
+    console.log("Dùng con lăn chuột để cuộn trang 500px");
+  }
+}
+
+class MobilePage extends BasePage {
+  //Ghi đè lên hàm cha (override)
+  //cùng tên hàm, nhưng logic bên trong thay đổi
+  cuonTrang() {
+    console.log("Dùng 1 ngón tay để vuốt màn hình");
+  }
+}
+
+class TabletPage extends BasePage {
+  cuonTrang() {
+    console.log("Vuốt 2 ngón tay");
+  }
+}
+
+// let trangWeb = new BasePage();
+// let trangMobile = new MobilePage();
+
+// trangWeb.cuonTrang();
+
+// trangMobile.cuonTrang();
+
+//Sức mạnh của đa hình; Gọi cùng 1 hàm trên nhiều object khác nhau
+
+let danhSachTrang = [new BasePage(), new MobilePage(), new TabletPage()];
+
+//cùng 1 lệnh . cuonTrang() => nhưng object khác nhau thì hành xử khác nhau
+danhSachTrang.forEach((trang) => {
+  trang.cuonTrang();
+});
+
+//ví dụ viết 1 hàm nhận bất kì class nào đều hoạt động với class đó
+//ví dụ tôi có 1 cái hàm chỉ biết đầu vào nhận là 1 tham số tên là trang
+
+function chayKiemThu(trang) {
+  console.log("Bắt đầu test");
+  trang.cuonTrang();
+  console.log("Keets thuc test");
+}
+
+chayKiemThu(new BasePage());
+
+chayKiemThu(new MobilePage());
+
+chayKiemThu(new TabletPage());
