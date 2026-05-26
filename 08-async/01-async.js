@@ -528,36 +528,220 @@
 //Chờ đợi (pausing) nội bộ khác hoàn toàn với việc ĐÓNG BĂNG HÊK THỐNG
 
 //
-const lamBitTet = () =>
-  new Promise((res) =>
-    setTimeout(() => {
-      res("Bit te");
-    }, 3000),
-  );
+// const lamBitTet = () =>
+//   new Promise((res) =>
+//     setTimeout(() => {
+//       res("Bit te");
+//     }, 3000),
+//   );
 
-const vatNuocCam = () =>
-  new Promise((res) =>
-    setTimeout(() => {
-      res("Nuoc Cam");
-    }, 1000),
-  );
+// const vatNuocCam = () =>
+//   new Promise((res) =>
+//     setTimeout(() => {
+//       res("Nuoc Cam");
+//     }, 1000),
+//   );
 
-async function phucVuTuanTu() {
-  console.log("KHÁCH A : Băts đầu order tuần tưh");
-  let start = Date.now();
+// async function phucVuTuanTu() {
+//   console.log("KHÁCH A : Băts đầu order tuần tưh");
+//   let start = Date.now();
 
-  //Dòng này bắt code của Khách A tạm dừng 3 sec
-  //Lưu ý luồng chính của msy tính ko đơ, nó đi phục vụ khach khác
-  let mon1 = await lamBitTet();
-  console.log(`Đã xong ${mon1} sau 3s. Tiêp tục vatgs nc căm`);
+//   //Dòng này bắt code của Khách A tạm dừng 3 sec
+//   //Lưu ý luồng chính của msy tính ko đơ, nó đi phục vụ khach khác
+//   let mon1 = await lamBitTet();
+//   console.log(`Đã xong ${mon1} sau 3s. Tiêp tục vatgs nc căm`);
 
-  //doi 1s
-  let mon2 = await vatNuocCam();
+//   //doi 1s
+//   let mon2 = await vatNuocCam();
 
-  let thoiGian = (Date.now() - start) / 1000;
-  console.log(`Khách A Nhận đủ đồ. Tổng thoiagf gian ${thoiGian}`);
+//   let thoiGian = (Date.now() - start) / 1000;
+//   console.log(`Khách A Nhận đủ đồ. Tổng thoiagf gian ${thoiGian}`);
+// }
+
+// phucVuTuanTu();
+
+// console.log("KHACH B: CHO MUON MENU");
+
+//for each -> là method của array ko cos breaj va continue
+
+// const fruits = ["apple", "banana", "orange"];
+
+// fruits.forEach((item) => {
+//   console.log(item);
+// });
+
+// function goiAPI(url) {
+//   return new Promise((resolve) => {
+//     setTimeout(() => resolve(`Dữ liệu từ ${url}`), 1000);
+//   });
+// }
+
+// let danhSachUrls = ["users", "products", "orders"];
+
+// // danhSachUrls.forEach(async (url) => {
+// //   let data = await goiAPI(url);
+// //   console.log(data);
+// // });
+
+// async function goiTuanTu() {
+//   for (let url of danhSachUrls) {
+//     let data = await goiAPI(url);
+//     console.log(data);
+//   }
+//   console.log("GOI XONG HET");
+// }
+
+// goiTuanTu();
+
+function taiAnhAvatar() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("Avatar da tai xong"), 3000);
+  });
 }
 
-phucVuTuanTu();
+function layDanhSachSanPham() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("Lay danh sach san pham xong"), 2000);
+  });
+}
 
-console.log("KHACH B: CHO MUON MENU");
+function docFileCauHinh() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("Doc xong file cau hinh"), 1000);
+  });
+}
+
+// async function chuanBiTuanTu() {
+//   let start = Date.now();
+
+//   let avatar = await taiAnhAvatar();
+//   console.log("DONE", avatar);
+
+//   let sanPham = await layDanhSachSanPham();
+//   console.log("DONE", sanPham);
+
+//   let config = await docFileCauHinh();
+//   console.log("DONE", config);
+
+//   let tongThoiGian = (Date.now() - start) / 1000;
+
+//   console.log(`Tổng thời gian ${tongThoiGian}`);
+// }
+
+// async function chuanBiSongSong() {
+//   let start = Date.now();
+
+//   let [avatar, sanPham, config] = await Promise.all([
+//     taiAnhAvatar(),
+//     layDanhSachSanPham(),
+//     docFileCauHinh(),
+//   ]);
+//   console.log("DONE", avatar);
+//   console.log("DONE", sanPham);
+//   console.log("DONE", config);
+//   let tongThoiGian = (Date.now() - start) / 1000;
+
+//   console.log(`Tổng thời gian ${tongThoiGian}`);
+// }
+
+// chuanBiSongSong();
+
+// function thanhCong() {
+//   return new Promise((resolve) => {
+//     setTimeout(() => resolve("XONG"), 1000);
+//   });
+// }
+
+// function thatBai() {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => reject("server bi loi"), 500);
+//   });
+// }
+
+// async function testFailFast(params) {
+//   try {
+//     let ketQua = await Promise.all([thanhCong(), thatBai(), thanhCong()]);
+//     console.log("Không bh chạy vào đây");
+//   } catch (loi) {
+//     console.log("Promise all that bai", loi);
+//   }
+// }
+// testFailFast();
+
+// await page.click()
+// await page.waitForResponse('*/api/thanhtoan')
+
+//await Promise.all( [
+//1. Giuong 1 cai bay doi API thanh toan tra ve (bat dau lang nghe ngam)
+// page.waitForResponse('*/api/thanhtoan')
+//2 dong thoi thuc hien hanh dong click
+// page.click('abc')
+
+// ])
+// console.log('thanh toan thanh cong');
+// function xoaTestAccount(tenAccount, thoiGian, xoaDuoc) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       if (xoaDuoc) {
+//         resolve(`Đã xóa ${tenAccount}`);
+//       } else {
+//         reject(`Không xóa được tên account ${tenAccount}`);
+//       }
+//     }, thoiGian);
+//   });
+// }
+
+// async function donDepTaiKhoan() {
+//   let ketQua = await Promise.allSettled([
+//     xoaTestAccount("user_01", 1200, true),
+//     xoaTestAccount("user_02", 900, false),
+//     xoaTestAccount("user_03", 1500, true),
+//   ]);
+//   // [
+//   //   { status: "fulfilled", value: "Đã xóa user_01" },
+//   //   { status: "rejected", reason: "Không xóa được tên account user_02" },
+//   //   { status: "fulfilled", value: "Đã xóa user_03" },
+//   // ];
+//   // console.log(ketQua);
+
+//   let baoCao = ketQua.map((item, index) => {
+//     let ten = ["user_01", "user_02", "user_03"][index];
+//     // const userName = item.status === "fulfilled" ? item.value : item.reason;
+//     return `${ten} : ${item.status === "fulfilled" ? "PASS" : "FAIL"}`;
+//   });
+//   console.log(baoCao);
+// }
+// //nhận được 1 cái mảng có format là ['user_01: PASS', 'user_02: FAIL',]
+
+// donDepTaiKhoan();
+
+function goiApi(url) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      let thanhCong = Math.random() > 0.1;
+      console.log(thanhCong);
+      if (thanhCong) {
+        resolve({ status: 200, data: "Kết quả từ " + url });
+      } else {
+        reject("Lỗi 500 server " + url);
+      }
+    }, 2000);
+  });
+}
+
+async function layDuLieuAnToan() {
+  try {
+    let user = await goiApi("api.neko.com.vn/user");
+    console.log(user.data);
+
+    let orders = await goiApi("api.neko.com.vn/orders");
+    console.log(orders.data);
+  } catch (loi) {
+    console.log("Da xay ra loi", loi);
+  } finally {
+    console.log("DON DEP TAI NGUYN");
+  }
+}
+
+layDuLieuAnToan();
+

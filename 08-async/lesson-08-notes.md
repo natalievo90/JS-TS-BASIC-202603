@@ -162,3 +162,35 @@ const tenPromise = new Promise((resolve, reject) => {
   - Tạm dừng dòng code bên trong hàm `async` để chờ Promise hoàn tất.
   - Trả về giá trị mà Promise đã `resolve()`, nên có thể gán thẳng vào biến.
   - Không làm đóng băng toàn bộ hệ thống.
+
+Promise.all - Chạy song song và gop kết quả
+
+let ketqua = await PRomise.all([promise1, promise2.....])
+Cách hoạt động của promise.all
+
+1. nhận vào 1 mảnh chứa nhiều promise
+2. kiicshj hoạt tất cả promise chạy cùng 1 lúc (//)
+3. đợi cho đến khi tất cả đều resolve song
+4. Trả về 1 mảng kêt squar theo đúng thứ tự ban đầu
+
+THỜI GIAN = thời gian tác vụ lâu nhât (ko cộng đồn)
+
+nếu bất kì promise nào trong mảng bị reject() . PRomise.all sẽ dưungf ngay va nhay vao catch() - cac promise kahc du da thanh cong
+cung bi bo qua
+
+Promise.allSettled() - Kẻ bao dung
+
+- Giống hệt promise.all chạy tất cả cùng 1 lúc. NHƯNG KHÔNG DỪNG Khi gặp lỗi. Nó kiên nhẫn đợi tâ cả chạy xong rồi trả vè mảng kết quả
+  gồm cả hành odonjg thành công hay tahast bại
+
+let ketqua = await PRomise.allSettled([promise1, promise2.....])
+-> Trả về mảng object, mỗi phân từ có dạng
+[
+{
+status: 'fulfilled', value: <giá trị resovle>, <- thành công
+}
+{
+status: 'rejected', value: <giá trị reject>, <- thất bại
+}
+
+]
