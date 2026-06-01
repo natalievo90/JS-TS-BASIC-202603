@@ -163,34 +163,62 @@ const tenPromise = new Promise((resolve, reject) => {
   - Trả về giá trị mà Promise đã `resolve()`, nên có thể gán thẳng vào biến.
   - Không làm đóng băng toàn bộ hệ thống.
 
-Promise.all - Chạy song song và gop kết quả
+## Promise.all - Chạy song song và gộp kết quả
 
-let ketqua = await PRomise.all([promise1, promise2.....])
-Cách hoạt động của promise.all
+```js
+let ketQua = await Promise.all([promise1, promise2, ...]);
+```
 
-1. nhận vào 1 mảnh chứa nhiều promise
-2. kiicshj hoạt tất cả promise chạy cùng 1 lúc (//)
-3. đợi cho đến khi tất cả đều resolve song
-4. Trả về 1 mảng kêt squar theo đúng thứ tự ban đầu
+### Cách hoạt động của `Promise.all`
 
-THỜI GIAN = thời gian tác vụ lâu nhât (ko cộng đồn)
+1. Nhận vào một mảng chứa nhiều Promise.
+2. Kích hoạt tất cả Promise chạy cùng lúc.
+3. Đợi cho đến khi tất cả đều resolve xong.
+4. Trả về một mảng kết quả theo đúng thứ tự ban đầu.
 
-nếu bất kì promise nào trong mảng bị reject() . PRomise.all sẽ dưungf ngay va nhay vao catch() - cac promise kahc du da thanh cong
-cung bi bo qua
+**Thời gian chạy = thời gian của tác vụ lâu nhất**  
+Không cộng dồn thời gian của từng Promise.
 
-Promise.allSettled() - Kẻ bao dung
+Nếu bất kỳ Promise nào trong mảng bị `reject()`, `Promise.all` sẽ dừng ngay và nhảy vào `catch()`. Các Promise khác dù đã thành công cũng sẽ bị bỏ qua.
 
-- Giống hệt promise.all chạy tất cả cùng 1 lúc. NHƯNG KHÔNG DỪNG Khi gặp lỗi. Nó kiên nhẫn đợi tâ cả chạy xong rồi trả vè mảng kết quả
-  gồm cả hành odonjg thành công hay tahast bại
+## Promise.allSettled() - Kẻ bao dung
 
-let ketqua = await PRomise.allSettled([promise1, promise2.....])
--> Trả về mảng object, mỗi phân từ có dạng
+- Giống `Promise.all`: chạy tất cả Promise cùng lúc.
+- Khác `Promise.all`: không dừng khi gặp lỗi.
+- Nó kiên nhẫn đợi tất cả chạy xong rồi trả về mảng kết quả, bao gồm cả thành công và thất bại.
+
+```js
+let ketQua = await Promise.allSettled([promise1, promise2, ...]);
+```
+
+Trả về mảng object, mỗi phần tử có dạng:
+
+```js
 [
-{
-status: 'fulfilled', value: <giá trị resovle>, <- thành công
-}
-{
-status: 'rejected', value: <giá trị reject>, <- thất bại
-}
+  {
+    status: "fulfilled",
+    value: "<giá trị resolve>", // Thành công
+  },
+  {
+    status: "rejected",
+    reason: "<giá trị reject>", // Thất bại
+  },
+];
+```
 
-]
+## Bắt lỗi trong async/await: try...catch...finally
+
+### Cú pháp
+
+```js
+try {
+  // Code nguy hiểm, có thể gây lỗi
+  // Bất kỳ dòng await nào cũng có thể bị reject
+} catch (loi) {
+  // Xử lý khi bất kỳ await nào ở trên bị reject
+  // Biến loi chứa nội dung reject hoặc Error object khi gọi new Error()
+} finally {
+  // Luôn luôn chạy, dù try thành công hay catch bắt lỗi
+  // Dùng để dọn dẹp tài nguyên
+}
+```
