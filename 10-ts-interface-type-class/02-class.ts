@@ -1,50 +1,54 @@
-//1 class field có giá trị khởi tạo -> không bắt buộc phải gán giá trị cho chúng trong constructor
-class LoginPage{
-    url: string="login";
-    txtUsername: string="txtUsername";
-    txtPassword: string="txtPassword"
+//1. Class field có giá trị mặc định-> ko cần constructor
+
+class LoginPage {
+  url: string = "/login";
+  txtUsername: string = "#username";
+  txtPassword: string = "#password";
 }
 
 const page = new LoginPage();
-console.log(page.url);
-console.log(page.txtUsername);
 console.log(page.txtPassword);
+console.log(page.url);
 
-//2 class field ko có gia trị  -> bắt buộc phải gán giá trị cho chúng trong constructor
-class HocVien{
-    hoTen: string;
-    tuoi: number;
-    email: string;
-    constructor(hoTen: string, tuoi: number, email: string){
-        this.hoTen = hoTen;
-        this.tuoi = tuoi;
-        this.email = email;
-    }
+//2 Class field ko có giá trị -> bắt buộc phải gán trong constructor
+class HocVien {
+  hoTen: string;
+  tuoi: number;
+  email: string;
+
+  constructor(hoTen: string, tuoi: number, email: string) {
+    this.hoTen = hoTen;
+    this.tuoi = tuoi;
+    this.email = email;
+  }
 }
-const hv1 = new HocVien("Nguyen Van A", 20, "nguyenvana@email.com");
-console.log(hv1.hoTen);
-console.log(hv1.tuoi);
-console.log(hv1.email);
 
-//3-combo ket hop class field + constructor
-class Product{
-    catalog: string="general";
-    tags: string[]=[];
-    rating: number=0;
-    constructor(public name: string, public price: number){
-        this.name = name;
-        this.price = price;
-    }
+const hv = new HocVien("neko", 19, "neko@gmail.com");
+console.log(hv.hoTen);
+
+//3 - combo ket hop class field + constructor
+
+class Product {
+  //thuoc tinh co dinh -> ko can constructor
+
+  category: string = "general";
+  tags: string[] = [];
+  rating: number = 0;
+
+  // thuoc tinh dong
+  name: string;
+  price: number;
+
+  constructor(name: string, price: number) {
+    this.name = name;
+    this.price = price;
+  }
 }
-const p1 = new Product("Iphone 14 Pro Max", 30000000);
-console.log(p1.catalog);
-console.log(p1.tags);
-console.log(p1.rating);
-console.log(p1.name);
-console.log(p1.price);
 
-class UserProfile{
-     name: string;
+const p = new Product("Macbook pro", 200000);
+
+class UserProfile {
+  name: string;
   email: string;
   avatarUrl?: string;
   constructor(name: string, email: string) {
@@ -72,61 +76,76 @@ class TestConfig {
     this.browser = browser;
     this.baseUrl = baseUrl;
   }
+
   summary(): string {
     const retry = this.retryCount ?? 0;
     const scrn = this.screenshot ?? "off";
     const tagList = this.tags?.join(", ") ?? "all";
-    return `Browser: ${this.browser}, Base URL: ${this.baseUrl}, Screenshot: ${scrn}, Retry Count: ${retry}, Tags: ${tagList}`;
+    return `${this.browser} | ${this.baseUrl} | retry: ${retry} | scrn: ${scrn} | tags: ${tagList}`;
   }
 }
-const config = new TestConfig("firefox", "https://example.com");
+
+const config = new TestConfig("firefox", "https://autoneko.com");
 console.log(config.summary());
 
 config.screenshot = "on";
 config.retryCount = 3;
-config.tags = ["smoke", "regression"];
-console.log(config.summary());  
+config.tags = ["smoke", "regress"];
 
-//readonly field
-class AppConfig {
-    readonly appName: string= "Neko App";
-    readonly version: string= "1.0.0";
-    constructor(version: string){
-        this.version = version;
-    }
+console.log(config.summary());
+
+//readonly
+
+class AppCofig {
+  readonly appName: string = "Neko app";
+  readonly version: string;
+
+  constructor(version: string) {
+    this.version = version;
+  }
 }
-const appConfig = new AppConfig("2.0.0");
-console.log(appConfig.appName);
-console.log(appConfig.version);
-// appConfig.appName = "New App"; //Lỗi vì appName là readonly
-// appConfig.version = "3.0.0"; //Lỗi vì version là readonly
 
-class UserOK{
+const appC = new AppCofig("2.0");
+console.log(appC.appName);
+console.log(appC.version);
+
+class UserOK {
   name!: string;
 }
+
 const user = new UserOK();
-user.name = "neko";
-console.log(user.name.toUpperCase()); 
-class Database{
-    connection: string | null = null;
-    async connect(url: string){
-        this.connection = url;
+user.name = "Neko";
+console.log(user.name.toUpperCase());
+
+class Database {
+  //   connection!: string;
+  //   //
+  //   connection2: string | null = null;
+
+  connection3?: string;
+
+  async connect(url: string) {
+    this.connection3 = url;
+  }
+
+  query(sql: string): string {
+    if (!this.connection3) {
+      throw new Error("Chua co ket noi");
     }
-    query(sql: string){
-        return `${this.connection} - Executing query: ${sql}`;
-    }
-    isConnected(): boolean{
-        return this.connection !== null;
-    }
+    return `${this.connection3} ${sql}`;
+  }
+  //   isConnected(): boolean {
+  //     return this.connection2 !== null;
+  //   }
 }
 
-async function runSQL() {
-  const db = new Database();
-  console.log(db.isConnected());
-  await db.connect("mongo://localhost:28101");
-  //db.connect()
-  console.log(db.query("SELECT * FROM"));
-}
+// async function runSQL() {
+//   const db = new Database();
+//   console.log(db.isConnected());
+//   await db.connect("mongo://localhost:28101");
+//   //db.connect()
+//   console.log(db.query("SELECT * FROM"));
+// }
 
 class HocVienDai {
   hoTen: string;
@@ -147,49 +166,59 @@ class HocVienNgan {
   ) {}
 }
 
-
+const hv1 = new HocVienDai("neko1", 23);
 const hv2 = new HocVienNgan("neko2", 23);
 
-class LoginPage2{
-    readonly url: string="/login";
-    readonly btnSubmit: string="btnSubmit";
-    constructor(public timeout: number){}
+//ket hop parameter propeties va class fiedls
+
+class LoginPage2 {
+  readonly url = "/login";
+  readonly btnSubmit = "btn";
+
+  constructor(public timeout: number) {}
 }
 
 class TestConfig2 {
-     //classfield MAc dinh
+  //classfield MAc dinh
   //gia tri co dinh moi instance deu gion nhau
+  //ko the thay doi khi tao object
   readonly url = "/login";
+  //default parameter
+  //gia tri mac dinhj - co the override khi tao object
   constructor(
     public browser: string = "chromium",
     public headless: boolean = true,
   ) {}
-    summary() {
-        return `Browser: ${this.browser}, Headless: ${this.headless}`;
-    }
 
+  summary() {
+    return `${this.browser} | headless: ${this.headless}`;
+  }
 }
 const tcg2 = new TestConfig2();
 tcg2.summary();
-const tcg3 = new TestConfig2("firefox", true);
-tcg3.summary();
+tcg2.url;
 
+const tcg3 = new TestConfig2("firefox");
+tcg3.browser;
+tcg3.url;
 
 class Animal {
   constructor(
     public name: string,
     public sound: string,
-   ) {}
+  ) {}
 
   public speak(): string {
     return `${this.name} keu: ${this.sound}`;
   }
 }
 
-const cat = new Animal("Meo", "Meo meo");
-console.log(cat.speak());
-cat.name ="meo may";
-console.log(cat.speak());
+const cat = new Animal("meo", "meo meo");
+
+cat.speak();
+
+cat.name = "meo may";
+cat.speak();
 
 class BankAccount {
   constructor(
@@ -212,6 +241,7 @@ class BankAccount {
 const account = new BankAccount("neko", "20000000", "123456");
 account.getBalance("123456");
 // console.log(account.balance);
+
 class BasePage {
   constructor(
     public url: string,
@@ -228,13 +258,13 @@ class LoginPage3 extends BasePage {
   constructor() {
     super("/login");
   }
-    goto() {
+
+  goto() {
     const fullUrl = this.getFullUrl();
     console.log(`Truy cap den trang web ${fullUrl}`);
 
     console.log(`Base URl: ${this.baseUrl}`);
   }
-
 }
 const loginPage3 = new LoginPage3();
 
@@ -337,5 +367,107 @@ console.log(c.count);
 
 console.log(Counter.totalCreated);
 Counter.showTotal();
+class BaseReporter {
+  static format(message: string): string {
+    return `[BASE] ${message}`;
+  }
 
+  static report(message: string): void {
+    console.log(this.format(message)); // this = class gọi, không phải instance
+  }
+}
 
+class CounterChild extends Counter {}
+
+const childCounter = new CounterChild("child");
+console.log(CounterChild.totalCreated);
+
+//Lí do tại sao thực tế khi code mà các hàm chứa static người tga ko dùng extends
+
+// thằng static không cso tính đa hình () - có override nhưng thực ra nó là shadow( che khuất)
+//
+class Parent {
+  static greet() {
+    return "Hello from Parent";
+  }
+}
+
+class Child extends Parent {
+  static greet() {
+    return "Hello from Child";
+  }
+}
+
+console.log(Parent.greet());
+console.log(Child.greet());
+//khi mà thằng cha có method gọi static method khác của chính nó
+class BaseReport {
+  static format(msg: string): string {
+    return `[BASE] ${msg}`;
+  }
+  static report(msg: string): void {
+    console.log(BaseReport.format(msg));
+  }
+}
+
+class JsonReporter extends BaseReport {
+  //thằng con tự định nghĩa lại format (bỏi vì tính đa hình) - nhưng đay là SHADOW ko phải override
+  static format(msg: string): string {
+    return `{"level": "info", "msg" :"${msg}"}`;
+  }
+}
+
+BaseReport.report("Hello");
+
+JsonReporter.report("Hello");
+
+class BaseInstance {
+  format(msg: string): string {
+    return `[BASE] ${msg}`;
+  }
+  report(msg: string): void {
+    console.log(this.format(msg));
+  }
+}
+class JsonInstance extends BaseInstance {
+  //thằng con tự định nghĩa lại format (bỏi vì tính đa hình) - nhưng đay là SHADOW ko phải override
+  format(msg: string): string {
+    return `{"level": "info", "msg" :"${msg}"}`;
+  }
+}
+
+const reporter: BaseInstance = new JsonInstance();
+
+reporter.report("hello");
+
+//Lí do: Static đc thiết kế để dùng trực tiếp ko phải mở rộng
+//Utility class - đây là class hỗ trợ cho chúng ta khi code
+// class StringUtils {
+//   static capitalize(str: string): string {}
+//   static isEmail(str: string): boolean;
+// }
+
+// class AppConfig {
+//   static readonly APP_NAME = "NEko shop";
+//   static readonly API_URL = "https/...";
+// }
+
+//Thực tế sử dụng.
+//Static Property Dữ liệu chia sẻ
+
+class AppConfig {
+  static readonly APP_NAME = "NEko shop";
+  static readonly API_URL = "https/...";
+}
+
+// const appConfig = new AppConfig();
+// appConfig.APP_NAME;
+
+console.log(AppConfig.API_URL);
+
+//static method - utility functions
+
+// class StringUtils {
+//   static capitalize(str: string): string {}
+//   static isEmail(str: string): boolean;
+// }
