@@ -151,3 +151,98 @@ const headers: HeaderPair[] = [
   ["Authorization", "Beaer token1123"],
   ["Content-type", "application/json"],
 ];
+//readonly
+const testRoles: readonly string[] = ["admin", "editor"];
+
+console.log(testRoles[0]);
+
+//các methodf dùng tỏng array -> thì gióng hệt với JS
+
+type ApiUser = {
+  id: number;
+  email: string;
+  role: "admin" | "viewer";
+  enabled: boolean;
+};
+
+const usersFromApi: ApiUser[] = [
+  {
+    id: 1,
+    email: "admin@example.com",
+    role: "admin",
+    enabled: true,
+  },
+  {
+    id: 2,
+    email: "viewer@example.com",
+    role: "viewer",
+    enabled: true,
+  },
+  {
+    id: 3,
+    email: "disabled@example.com",
+    role: "viewer",
+    enabled: false,
+  },
+];
+
+const emails = usersFromApi.map((user) => user.email);
+console.log(emails);
+
+const enabledUsers = usersFromApi.filter((user) => user.enabled);
+console.log(enabledUsers);
+
+//Định kiểu cho object
+
+//inline type - kieu truc tiep
+const user2: { email: string; password: string } = {
+  email: "abc",
+  password: "123",
+};
+
+//type alias - dat ten shape cho object
+//type giup ten shape cua object de tai su dung
+
+//interface
+
+//optional properties
+type CreateUserInput = {
+  email: string;
+  phone?: string;
+};
+
+const userA1: CreateUserInput = {
+  email: "abc",
+};
+
+//định kiêu dữ liệu cho hàm
+function cong(a: number, b: number): number {
+  return a + b;
+}
+
+function taoLoiChao(ten: string): string {
+  return `Xin chao ${ten}`;
+}
+
+//void = ham ko tra ve gia tri nao co y nghia. giong cai viec lam rat nhieu action nhung ko tra a ket qua
+
+function logStep(message: string): void {
+  console.log(`[STEP] ${message}`);
+}
+//
+
+async function clickButton(slector: string): Promise<void> {}
+
+async function layTieuDe(): Promise<string> {
+  return "trang dashboard";
+}
+
+function mocChoDoi(selector: string, timeout?: number): void {
+  const ms = timeout ?? 5000;
+  console.log(`Cho ${selector} toi da ${ms}`);
+  // ko truyen thi mac dih la 5000
+}
+
+mocChoDoi("abc");
+mocChoDoi("abc", 20000);
+//type guard
